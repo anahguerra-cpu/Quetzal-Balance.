@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quetzal Balance</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1B5E20">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:#f4f8f4;color:#1B5E20;}
+#splash{position:fixed;width:100%;height:100%;background:#1B5E20;color:white;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.8s ease;}
+.hidden{opacity:0;pointer-events:none;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:white;box-shadow:0 2px 15px rgba(0,0,0,0.05);position:sticky;top:0;}
+.hero{padding:100px 20px;text-align:center;background:linear-gradient(135deg,#1B5E20,#2E7D32);color:white;}
+.section{padding:80px 40px;max-width:1200px;margin:auto;}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;}
+.card{background:white;padding:30px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,0.08);transition:0.4s;}
+.card:hover{transform:translateY(-10px);}
+.price{font-weight:700;margin:15px 0;}
+button{background:#2E7D32;color:white;border:none;padding:12px 25px;border-radius:30px;cursor:pointer;}
+.install-btn{position:fixed;bottom:20px;right:20px;background:#1B5E20;color:white;padding:15px 25px;border-radius:40px;display:none;}
+footer{background:#1B5E20;color:white;text-align:center;padding:40px;margin-top:60px;}
+</style>
+</head>
+
+<body>
+
+<div id="splash">
+<img src="logo-192.png" width="120">
+<h1>Quetzal Balance</h1>
+</div>
+
+<nav>
+<h2>Quetzal Balance</h2>
+</nav>
+
+<section class="hero">
+<h1>Balance no es un producto. Es cómo eliges vivir.</h1>
+<p>Suplementación funcional enfocada en energía limpia y control inteligente del azúcar.</p>
+</section>
+
+<section class="section">
+<h2>Nuestras Líneas</h2>
+
+<div class="products">
+
+<div class="card">
+<h3>Balance Metabólico</h3>
+<ul>
+<li>Magnesio Glicinato</li>
+<li>Omega 3</li>
+<li>Vitamina D3 + K2</li>
+<li>Probióticos</li>
+<li>Colágeno sin azúcar</li>
+</ul>
+<div class="price">Desde Q259</div>
+<button>Agregar</button>
+</div>
+
+<div class="card">
+<h3>Ketone Performance</h3>
+<ul>
+<li>Cetonas exógenas</li>
+<li>Electrolitos premium</li>
+<li>MCT aceite y polvo</li>
+<li>Apoyo a cetosis</li>
+</ul>
+<div class="price">Desde Q389</div>
+<button>Agregar</button>
+</div>
+
+<div class="card">
+<h3>Sugar Smart</h3>
+<ul>
+<li>Control glucémico</li>
+<li>Reducción de antojos</li>
+<li>Alternativa sin azúcar</li>
+<li>Compatible low-carb</li>
+</ul>
+<div class="price">Desde Q319</div>
+<button>Agregar</button>
+</div>
+
+</div>
+</section>
+
+<footer>
+Quetzal Balance © 2026
+</footer>
+
+<button id="installBtn" class="install-btn">Instalar App</button>
+
+<script>
+window.addEventListener("load",()=>{
+setTimeout(()=>{document.getElementById("splash").classList.add("hidden");},1500);
+});
+
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('service-worker.js');
+}
+
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+e.preventDefault();
+deferredPrompt = e;
+installBtn.style.display = 'block';
+});
+
+installBtn.addEventListener('click', async () => {
+if (deferredPrompt) {
+deferredPrompt.prompt();
+await deferredPrompt.userChoice;
+deferredPrompt = null;
+installBtn.style.display = 'none';
+}
+});
+</script>
+
+</body>
+</html>
